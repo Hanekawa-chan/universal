@@ -1,0 +1,26 @@
+syntax="proto3";
+
+package protoc;
+
+option go_package="/protoc";
+
+service Universal {
+  rpc signUp(User) returns (Response){}
+  rpc signIn(User) returns (Response){}
+  rpc signOut(User) returns (Response){}
+}
+
+message User {
+  string name = 1;
+  string password = 2;
+}
+
+message Response {
+  string response = 1;
+}
+
+message Message {
+  string text = 1;
+  string receiver = 2;
+  string sender = 3;
+}
