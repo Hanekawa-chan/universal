@@ -204,7 +204,7 @@ var file_universal_proto_rawDesc = []byte{
 	0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x65,
 	0x69, 0x76, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x63, 0x65,
 	0x69, 0x76, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x32, 0x90, 0x01, 0x0a,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x32, 0xc6, 0x01, 0x0a,
 	0x09, 0x55, 0x6e, 0x69, 0x76, 0x65, 0x72, 0x73, 0x61, 0x6c, 0x12, 0x2a, 0x0a, 0x06, 0x73, 0x69,
 	0x67, 0x6e, 0x55, 0x70, 0x12, 0x0c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x55, 0x73,
 	0x65, 0x72, 0x1a, 0x10, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x52, 0x65, 0x73, 0x70,
@@ -213,8 +213,12 @@ var file_universal_proto_rawDesc = []byte{
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x22, 0x00, 0x12, 0x2b, 0x0a, 0x07, 0x73, 0x69, 0x67, 0x6e, 0x4f, 0x75, 0x74, 0x12, 0x0c, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x1a, 0x10, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
-	0x03, 0x5a, 0x01, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x34, 0x0a, 0x0b, 0x73, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x0f,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x1a,
+	0x10, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x28, 0x01, 0x42, 0x09, 0x5a, 0x07, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -239,11 +243,13 @@ var file_universal_proto_depIdxs = []int32{
 	0, // 0: protoc.Universal.signUp:input_type -> protoc.User
 	0, // 1: protoc.Universal.signIn:input_type -> protoc.User
 	0, // 2: protoc.Universal.signOut:input_type -> protoc.User
-	1, // 3: protoc.Universal.signUp:output_type -> protoc.Response
-	1, // 4: protoc.Universal.signIn:output_type -> protoc.Response
-	1, // 5: protoc.Universal.signOut:output_type -> protoc.Response
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	2, // 3: protoc.Universal.sendMessage:input_type -> protoc.Message
+	1, // 4: protoc.Universal.signUp:output_type -> protoc.Response
+	1, // 5: protoc.Universal.signIn:output_type -> protoc.Response
+	1, // 6: protoc.Universal.signOut:output_type -> protoc.Response
+	1, // 7: protoc.Universal.sendMessage:output_type -> protoc.Response
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -327,6 +333,7 @@ type UniversalClient interface {
 	SignUp(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 	SignIn(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 	SignOut(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
+	SendMessage(ctx context.Context, opts ...grpc.CallOption) (Universal_SendMessageClient, error)
 }
 
 type universalClient struct {
@@ -364,11 +371,46 @@ func (c *universalClient) SignOut(ctx context.Context, in *User, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *universalClient) SendMessage(ctx context.Context, opts ...grpc.CallOption) (Universal_SendMessageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Universal_serviceDesc.Streams[0], "/protoc.Universal/sendMessage", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &universalSendMessageClient{stream}
+	return x, nil
+}
+
+type Universal_SendMessageClient interface {
+	Send(*Message) error
+	CloseAndRecv() (*Response, error)
+	grpc.ClientStream
+}
+
+type universalSendMessageClient struct {
+	grpc.ClientStream
+}
+
+func (x *universalSendMessageClient) Send(m *Message) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *universalSendMessageClient) CloseAndRecv() (*Response, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(Response)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // UniversalServer is the server API for Universal service.
 type UniversalServer interface {
 	SignUp(context.Context, *User) (*Response, error)
 	SignIn(context.Context, *User) (*Response, error)
 	SignOut(context.Context, *User) (*Response, error)
+	SendMessage(Universal_SendMessageServer) error
 }
 
 // UnimplementedUniversalServer can be embedded to have forward compatible implementations.
@@ -383,6 +425,9 @@ func (*UnimplementedUniversalServer) SignIn(context.Context, *User) (*Response, 
 }
 func (*UnimplementedUniversalServer) SignOut(context.Context, *User) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignOut not implemented")
+}
+func (*UnimplementedUniversalServer) SendMessage(Universal_SendMessageServer) error {
+	return status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
 
 func RegisterUniversalServer(s *grpc.Server, srv UniversalServer) {
@@ -443,6 +488,32 @@ func _Universal_SignOut_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Universal_SendMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(UniversalServer).SendMessage(&universalSendMessageServer{stream})
+}
+
+type Universal_SendMessageServer interface {
+	SendAndClose(*Response) error
+	Recv() (*Message, error)
+	grpc.ServerStream
+}
+
+type universalSendMessageServer struct {
+	grpc.ServerStream
+}
+
+func (x *universalSendMessageServer) SendAndClose(m *Response) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *universalSendMessageServer) Recv() (*Message, error) {
+	m := new(Message)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _Universal_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "protoc.Universal",
 	HandlerType: (*UniversalServer)(nil),
@@ -460,6 +531,12 @@ var _Universal_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Universal_SignOut_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "sendMessage",
+			Handler:       _Universal_SendMessage_Handler,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "universal.proto",
 }
