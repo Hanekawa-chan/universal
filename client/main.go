@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	channel "cloud.google.com/go/channel/apiv1"
 	"context"
 	"fmt"
 	"github.com/Hanekawa-chan/universal/protoc"
@@ -14,35 +13,39 @@ import (
 var sender string
 var receiver string
 
-func SignUp(ctx context.Context, in *protoc.User, opts ...grpc.CallOption) (*protoc.Response, error) {
-	out := new(protoc.Response)
-	err := c.cc.Invoke(ctx, "/protoc.Universal/signUp", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func SignUp(ctx context.Context, in *protoc.User, client protoc.UniversalClient) (*protoc.Response, error) {
+	response, _ := client.SignUp(ctx, in)
+	return response, nil
 }
 
-func SignIn(ctx context.Context, in *protoc.User, opts ...grpc.CallOption) (*protoc.Response, error) {
-	out := new(protoc.Response)
-	err := c.cc.Invoke(ctx, "/protoc.Universal/signIn", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func SignIn(ctx context.Context, in *protoc.User, client protoc.UniversalClient) (*protoc.Response, error) {
+	response, _ := client.SignIn(ctx, in)
+	return response, nil
 }
 
-func SignOut(ctx context.Context, in *protoc.User, opts ...grpc.CallOption) (*protoc.Response, error) {
-	out := new(protoc.Response)
-	err := c.cc.Invoke(ctx, "/protoc.Universal/signOut", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func SignOut(ctx context.Context, in *protoc.User, client protoc.UniversalClient) (*protoc.Response, error) {
+	response, _ := client.SignOut(ctx, in)
+	return response, nil
 }
 
-func sendMessage() {
+func SendMessage(ctx context.Context, client protoc.UniversalClient, message string) {
+	stream, err := client.SendMessage(ctx)
+	if err != nil {
+		log.Printf("Cannot send message: error: %v", err)
+	}
 
+	msg := protoc.Message{
+		Receiver: receiver,
+		Text:     message,
+		Sender:   sender,
+	}
+	err = stream.Send(&msg)
+	if err != nil {
+		return
+	}
+
+	ack, err := stream.CloseAndRecv()
+	fmt.Printf("Message sent: %v \n", ack)
 }
 
 func main() {
@@ -61,38 +64,53 @@ func main() {
 	ctx := context.Background()
 	client := protoc.NewUniversalClient(conn)
 	scanner := bufio.NewScanner(os.Stdin)
-	message := protoc.Message{}
 
 	for {
 		if sender != "" {
-			for scanner.Scan() {
-				if scanner.Text() == "/" {
-					receiver = ""
-					sender = ""
-					break
-				} else {
-					go sendMessage(ctx, client, message)
+			if receiver != "" {
+				for scanner.Scan() {
+					s := scanner.Text()
+					switch s {
+					case "/signout":
+						out, _ := SignOut(ctx, &protoc.User{Name: sender})
+						if out.Response == "OK" {
+							sender = ""
+							receiver = ""
+						}
+					case "/connect":
+						receiver = scanner.Text()
+					default:
+						SendMessage(ctx, client, s)
+					}
+				}
+			} else {
+				for scanner.Scan() {
+					s := scanner.Text()
+					if s == "/connect" {
+						receiver = scanner.Text()
+					}
 				}
 			}
 		} else {
-			fmt.Println("Enter channel name")
 			for scanner.Scan() {
-				channel.Name = scanner.Text()
-				break
+				s := scanner.Text()
+				switch s {
+				case "/signin":
+					name := scanner.Text()
+					password := scanner.Text()
+					in, _ := SignIn(ctx, &protoc.User{Name: name, Password: password})
+					if in.Response == "OK" {
+						sender = name
+					}
+				case "/signup":
+					name := scanner.Text()
+					password := scanner.Text()
+					in, _ := SignUp(ctx, &protoc.User{Name: name, Password: password})
+					if in.Response == "OK" {
+						sender = name
+					}
+				}
 			}
-			fmt.Println("Enter your name")
-			for scanner.Scan() {
-				channel.SendersName = scanner.Text()
-				break
-			}
-			fmt.Println("Enter password for channel")
-			for scanner.Scan() {
-				channel.Password = scanner.Text()
-				break
-			}
-			channelName = channel.Name
-			senderName = channel.SendersName
-			go joinChannel(ctx, client, &channel)
 		}
 	}
 }

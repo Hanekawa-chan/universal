@@ -9,6 +9,7 @@ service Universal {
   rpc signIn(User) returns (Response){}
   rpc signOut(User) returns (Response){}
   rpc sendMessage(stream Message) returns (Response){}
+  rpc receiveMessage(User) returns (stream Message){}
 }
 
 message User {

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/Hanekawa-chan/universal/protoc"
+	"io"
 
 	"google.golang.org/grpc"
 	"log"
@@ -15,14 +16,14 @@ type UniversalServer struct {
 	mu          sync.Mutex
 	authed      map[string]bool
 	credentials map[string]string
-	connections map[string]chan *protoc.Message
+	connections map[string][]chan *protoc.Message
 }
 
 func newServer() *UniversalServer {
 	var s = &UniversalServer{
 		authed:      make(map[string]bool),
 		credentials: make(map[string]string),
-		connections: make(map[string]chan *protoc.Message),
+		connections: make(map[string][]chan *protoc.Message),
 	}
 	return s
 }
@@ -74,6 +75,34 @@ func (u *UniversalServer) SignOut(ctx context.Context, user *protoc.User) (*prot
 	return &protoc.Response{
 		Response: "CAN'T FIND USER",
 	}, nil
+}
+
+func (u *UniversalServer) SendMessage(stream protoc.Universal_SendMessageServer) error {
+	str, err := stream.Recv()
+
+	if err == io.EOF {
+		return nil
+	}
+
+	if err != nil {
+		return err
+	}
+
+	err = stream.SendAndClose(&protoc.Response{
+		Response: "OK",
+	})
+
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		streams := u.connections[str.Sender]
+		for _, msgChan := range streams {
+			msgChan <- str
+		}
+	}()
+	return nil
 }
 
 func main() {
