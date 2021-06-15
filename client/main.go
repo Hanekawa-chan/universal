@@ -28,6 +28,14 @@ func SignOut(ctx context.Context, in *protoc.User, client protoc.UniversalClient
 	return response, nil
 }
 
+func ReceiveMessage(ctx context.Context, client protoc.UniversalClient, user *protoc.User) {
+	stream, err := client.ReceiveMessage(ctx, user)
+	if err != nil {
+		log.Fatalf("client.JoinChannel(ctx, &channel) throws: %v", err)
+	}
+
+}
+
 func SendMessage(ctx context.Context, client protoc.UniversalClient, message string) {
 	stream, err := client.SendMessage(ctx)
 	if err != nil {
